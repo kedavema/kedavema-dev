@@ -23,9 +23,16 @@ Real content (profile, links, skills, featured projects/case studies, experience
 
 **Gotcha for later:** Next.js 16 App Router route `params` are async (`Promise<Params>`) — dynamic route pages must `await params`, otherwise it silently 404s in dev even though the production SSG build looks fine (`generateStaticParams` pre-resolves it, hiding the bug). Already fixed in `src/app/projects/[slug]/page.tsx`.
 
-## M2 — Terminal Core ⏳ not started
+## M2 — Terminal Core ✅ done
 
-Command registry + parser, `TerminalShell`/`CommandLine`/`CommandOutput`, `help`/`about`/`clear`, required history, clickable chips wired to the same command dispatch as typed input. Autocomplete only if trivial.
+- Command registry + parser: `src/lib/terminal/{types,parser,commands}.ts`.
+- UI: `src/components/terminal/{TerminalShell,CommandLine,CommandOutput,CommandChips}.tsx`.
+- Commands implemented: `help` (lists M2 commands + "coming soon" M3 preview), `about` (reads `getProfile()` from `src/lib/content.ts`), `clear`.
+- Keyboard history (ArrowUp/ArrowDown) + Enter dispatch in `CommandLine`; chips call the exact same `dispatch` function in `TerminalShell` as typed input.
+- No autocomplete — skipped as non-trivial for the acceptance bar.
+- No storage: history/output live only in `TerminalShell` component state, reset on page reload.
+- Integrated into `/` homepage, replacing the static "coming in M2" placeholder; static routes untouched.
+- Verified: `pnpm lint` and `pnpm build` clean.
 
 ## M3 — Content Commands ⏳ not started
 
