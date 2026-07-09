@@ -9,6 +9,7 @@ export type CommandOutputLine =
 export type CommandResult = {
   lines: CommandOutputLine[];
   clear?: boolean;
+  chips?: string[];
 };
 
 export type Command = {

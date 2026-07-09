@@ -63,3 +63,15 @@ export const experienceEntrySchema = z.object({
   relevantWork: z.array(z.string()).optional(),
 });
 export type ExperienceEntry = z.infer<typeof experienceEntrySchema>;
+
+export const architectureNoteSchema = z.object({
+  heading: z.string(),
+  body: z.string(),
+});
+export type ArchitectureNote = z.infer<typeof architectureNoteSchema>;
+
+export const architectureSchema = z.object({
+  summary: z.string(),
+  notes: z.array(architectureNoteSchema).min(1),
+});
+export type Architecture = z.infer<typeof architectureSchema>;

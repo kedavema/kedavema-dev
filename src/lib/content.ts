@@ -4,6 +4,7 @@ import { coreSkills, skillGroups, languages } from "@content/skills";
 import { projects } from "@content/projects";
 import { caseStudies } from "@content/case-studies";
 import { experience } from "@content/experience";
+import { architecture } from "@content/architecture";
 
 export function getProfile() {
   return profile;
@@ -43,4 +44,8 @@ export function getCaseStudyBySlug(slug: string) {
 
 export function getExperience() {
   return experience;
+}
+
+export function getArchitecture() {
+  return architecture;
 }
