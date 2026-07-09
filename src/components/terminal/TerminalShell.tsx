@@ -39,7 +39,7 @@ export function TerminalShell() {
 
   return (
     <div className="space-y-4">
-      <CommandOutput entries={entries} />
+      <CommandOutput entries={entries} onDispatch={dispatch} />
       <CommandLine history={inputHistory} onSubmit={dispatch} />
       <CommandChips onDispatch={dispatch} />
     </div>
