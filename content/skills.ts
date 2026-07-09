@@ -1,0 +1,127 @@
+import { skillGroupSchema, type SkillGroup } from "./types";
+
+export const coreSkills: string[] = [
+  "TypeScript",
+  "Node.js",
+  "NestJS",
+  "Python",
+  "Django/FastAPI",
+  "PostgreSQL",
+  "AWS",
+  "Docker",
+  "Terraform",
+  "Redis/Valkey",
+  "Next.js",
+  "React",
+  "RAG",
+];
+
+export const skillGroups: SkillGroup[] = [
+  {
+    category: "Backend",
+    items: [
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "SQL",
+      "Node.js",
+      "NestJS",
+      "Express",
+      "Django",
+      "Django Rest Framework",
+      "FastAPI",
+      "Flask",
+      "REST APIs",
+      "API design",
+      "Clean Architecture",
+      "Domain-Driven Design",
+      "System design",
+    ],
+  },
+  {
+    category: "Databases",
+    items: [
+      "PostgreSQL",
+      "MySQL",
+      "MongoDB",
+      "Redis",
+      "Valkey",
+      "Prisma",
+      "SQL query optimization",
+      "pgvector",
+    ],
+  },
+  {
+    category: "Cloud / Infrastructure",
+    items: [
+      "AWS Lambda",
+      "API Gateway",
+      "AWS S3",
+      "AWS Secrets Manager",
+      "AWS Amplify",
+      "Docker",
+      "Terraform",
+      "CI/CD",
+      "GitHub Actions",
+      "Serverless architecture",
+      "Vercel",
+      "Render",
+      "Neon",
+    ],
+  },
+  {
+    category: "Frontend",
+    items: [
+      "React",
+      "Next.js 15",
+      "React Native",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Bootstrap",
+      "Redux",
+      "Zustand",
+      "react-hook-form",
+      "Zod",
+    ],
+  },
+  {
+    category: "AI / LLM",
+    items: [
+      "RAG (deterministic)",
+      "OpenAI",
+      "Document ingestion",
+      "Retrieval",
+      "Grounding with mandatory citations",
+      "Refusal behavior",
+      "AI-assisted development",
+    ],
+  },
+  {
+    category: "Integrations / Platforms",
+    items: ["Firebase", "Heroku", "Clerk", "Intercom", "Vimeo API", "Stripe", "Calendly"],
+  },
+  {
+    category: "Tools",
+    items: [
+      "Nx Monorepo",
+      "Yarn",
+      "Vite",
+      "Jest",
+      "Pytest",
+      "Postman",
+      "DBeaver",
+      "VS Code",
+      "Git",
+      "Jira",
+      "Docker Compose",
+    ],
+  },
+].map((group) => skillGroupSchema.parse(group));
+
+export const languages = [
+  { language: "Spanish", level: "Native" },
+  {
+    language: "English",
+    level: "B2 Upper Intermediate (EF SET 57/100, 2024), comfortable in professional conversations",
+  },
+];
