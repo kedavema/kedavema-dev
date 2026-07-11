@@ -171,7 +171,7 @@ const commands: Command[] = [
   },
   {
     name: "contact",
-    description: "how to reach out",
+    description: "reach out via form or direct links",
     run: () => {
       const links = getLinks();
       return {
@@ -180,8 +180,10 @@ const commands: Command[] = [
           { kind: "text", value: `GitHub: ${links.github}` },
           { kind: "text", value: `LinkedIn: ${links.linkedin}` },
           { kind: "muted", value: "" },
-          { kind: "muted", value: "A contact form is on its way — for now, reach out directly." },
+          { kind: "muted", value: "Or use the form below:" },
         ],
+        panel: "contact",
+        chips: ["projects", "resume"],
       };
     },
   },

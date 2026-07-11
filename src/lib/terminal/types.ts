@@ -10,6 +10,7 @@ export type CommandResult = {
   lines: CommandOutputLine[];
   clear?: boolean;
   chips?: string[];
+  panel?: "contact";
 };
 
 export type Command = {

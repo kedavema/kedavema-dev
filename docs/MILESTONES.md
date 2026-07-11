@@ -34,17 +34,30 @@ Real content (profile, links, skills, featured projects/case studies, experience
 - Integrated into `/` homepage, replacing the static "coming in M2" placeholder; static routes untouched.
 - Verified: `pnpm lint` and `pnpm build` clean.
 
-## M3 — Content Commands ⏳ not started
+## M3 — Content Commands ✅ done
 
-`skills`, `projects`, `case-study <slug>`, `architecture` (meta page), `resume` — all backed by the same `lib/content.ts` used by the static routes.
+- Terminal commands backed by `src/lib/content.ts`: `skills`, `projects`, `case-study <slug>`, `architecture`, `resume`.
+- Verified: `pnpm lint` and `pnpm build` clean.
 
-## M4 — Contact Slice ⏳ not started
+## M4 — Contact Slice ✅ done
 
-`contact` command/panel, Route Handler/Server Action + Zod validation + honeypot + Resend integration, graceful fallback UI. Rate limiting and contact analytics deferred.
+- Contact form on `/contact` and `contact` terminal command/panel, both hitting `POST /api/contact` (`src/app/api/contact/route.ts`).
+- Shared Zod validation in `src/lib/contact/schema.ts`, honeypot field, Resend wrapper in `src/lib/contact/sendContactEmail.ts`.
+- Graceful fallback UI when Resend env vars are missing or sending fails.
+- Rate limiting and contact analytics deferred (out of scope).
 
-## M5 — Responsive, A11y, SEO Pass ⏳ not started
+## M5 — Responsive, A11y, SEO Pass ✅ done
 
-Mobile layout pass, `prefers-reduced-motion`, aria-live wiring, `generateMetadata`/sitemap/JSON-LD across the static routes.
+- Mobile layout pass across all static routes and terminal UI: `break-words`/`break-all` on long text (URLs, slugs, stacks), touch-target sizing on chips/buttons, responsive resume iframe height.
+- `prefers-reduced-motion` respected globally (`src/app/globals.css`).
+- Terminal output wired with `role="log"` + `aria-live="polite"` (`CommandOutput.tsx`); accessible labels on command input and chips; visible focus rings on all interactive elements (fixed a real bug: form inputs had `outline-none` with no focus replacement).
+- Contact form errors wired with `aria-invalid`/`aria-describedby`/`role="alert"`; success/fallback states use `role="status"`.
+- Skip-to-content link added in `layout.tsx`.
+- `generateMetadata`/static metadata sourced from `getProfile()` via the content layer on all static routes.
+- Sitemap (`src/app/sitemap.ts`) covering all static routes + project slugs from `getProjects()`.
+- JSON-LD (`src/lib/seo/jsonLd.tsx`): Person + WebSite on the homepage, SoftwareSourceCode per project detail page — no invented data, only content-layer fields.
+- `getSiteUrl()` (`src/lib/seo/site.ts`) reads `NEXT_PUBLIC_SITE_URL`, falls back to `http://localhost:3000` — **set the env var once a production domain exists**.
+- Verified: `pnpm lint` and `pnpm build` clean; sitemap.xml and JSON-LD manually checked against a production build.
 
 ## M6 — Testing & Deploy ⏳ not started
 
