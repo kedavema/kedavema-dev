@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { Nav } from "@/components/Nav";
 import { getProfile } from "@/lib/content";
 import { getSiteUrl } from "@/lib/seo/site";
@@ -39,6 +40,7 @@ export default function RootLayout({
         >
           {children}
         </main>
+        <Analytics />
       </body>
     </html>
   );
