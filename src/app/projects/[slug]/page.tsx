@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCaseStudyBySlug, getProjectBySlug, getProjects } from "@/lib/content";
+import { JsonLd, buildProjectJsonLd } from "@/lib/seo/jsonLd";
 
 type Params = { slug: string };
 
@@ -37,15 +38,16 @@ export default async function CaseStudyPage({
 
   return (
     <article className="space-y-8">
+      <JsonLd json={buildProjectJsonLd(project)} />
       <header>
-        <h1 className="text-2xl font-bold">{project.name}</h1>
+        <h1 className="break-words text-2xl font-bold">{project.name}</h1>
         {project.roleTitle && project.employmentDates && (
           <p className="text-muted">
             {project.roleTitle} · {project.employmentDates}
           </p>
         )}
         <p className="mt-4 max-w-2xl leading-relaxed">{project.summary}</p>
-        <p className="mt-3 text-xs text-muted">{project.stack.join(" · ")}</p>
+        <p className="mt-3 break-words text-xs text-muted">{project.stack.join(" · ")}</p>
       </header>
 
       <section>

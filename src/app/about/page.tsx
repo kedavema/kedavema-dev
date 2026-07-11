@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { getProfile, getExperience, getLanguages } from "@/lib/content";
 
+const profileForMetadata = getProfile();
+
 export const metadata: Metadata = {
-  title: "About — Kevin Velázquez",
-  description: "Backend-focused full-stack engineer — background and experience.",
+  title: `About — ${profileForMetadata.name}`,
+  description: `${profileForMetadata.title} — background and experience.`,
 };
 
 export default function AboutPage() {
@@ -26,7 +28,7 @@ export default function AboutPage() {
           {experience.map((entry) => (
             <div key={`${entry.company}-${entry.start}`} className="border-l border-border pl-4">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="font-semibold">
+                <h3 className="break-words font-semibold">
                   {entry.company} — {entry.role}
                 </h3>
                 <span className="text-sm text-muted">

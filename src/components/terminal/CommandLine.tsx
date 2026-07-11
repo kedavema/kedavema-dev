@@ -47,9 +47,9 @@ export function CommandLine({ history, onSubmit }: CommandLineProps) {
 
   return (
     <div className="flex items-center gap-2 text-accent">
-      <span>visitor@portfolio:~$</span>
+      <span aria-hidden="true">visitor@portfolio:~$</span>
       <input
-        className="flex-1 bg-transparent text-foreground outline-none"
+        className="min-w-0 flex-1 bg-transparent text-foreground outline-none focus-visible:outline-none"
         value={value}
         onChange={(event) => {
           setValue(event.target.value);
@@ -59,7 +59,7 @@ export function CommandLine({ history, onSubmit }: CommandLineProps) {
         autoComplete="off"
         autoCapitalize="off"
         spellCheck={false}
-        aria-label="terminal command input"
+        aria-label="Terminal command input. Type a command and press Enter to run it."
       />
     </div>
   );

@@ -16,7 +16,8 @@ export function Nav() {
           <Link
             key={link.href}
             href={link.href}
-            className="text-muted transition-colors hover:text-accent"
+            aria-label={link.label === "~" ? "Home" : undefined}
+            className="rounded text-muted transition-colors hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
           >
             {link.label}
           </Link>
