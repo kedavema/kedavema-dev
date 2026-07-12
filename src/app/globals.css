@@ -1,27 +1,111 @@
 @import "tailwindcss";
 
-:root {
-  --background: #0a0a0a;
-  --foreground: #e5e7eb;
-  --accent: #4ade80;
-  --muted: #9ca3af;
-  --border: #27272a;
+:root,
+[data-theme="dark"] {
+  --bg: #08090a;
+  --panel: #0c0d0f;
+  --panel-2: rgba(255, 255, 255, 0.018);
+  --code-bg: #0e0f12;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.13);
+  --fg: #f3f2ef;
+  --muted: rgba(243, 242, 239, 0.6);
+  --faint: rgba(243, 242, 239, 0.42);
+  --accent: #e2894c;
+  --accent-2: #ef9a5e;
+  --accent-soft: rgba(226, 137, 76, 0.09);
+  --accent-line: rgba(226, 137, 76, 0.28);
+  --green: #57c98a;
+  --blue: #7fb0e8;
+  --json-str: #9ecb8a;
+  --grid: rgba(255, 255, 255, 0.028);
+  --glow: rgba(226, 137, 76, 0.16);
+  --chip-bg: rgba(255, 255, 255, 0.05);
+  --hover: rgba(255, 255, 255, 0.06);
+  --elevate: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.008)
+  );
+  --shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f3f1ec;
+  --panel: #ffffff;
+  --panel-2: rgba(24, 18, 12, 0.02);
+  --code-bg: #faf7f1;
+  --border: rgba(24, 18, 12, 0.1);
+  --border-strong: rgba(24, 18, 12, 0.16);
+  --fg: #1b1714;
+  --muted: rgba(27, 23, 20, 0.62);
+  --faint: rgba(27, 23, 20, 0.5);
+  --accent: #c1662a;
+  --accent-2: #a9571f;
+  --accent-soft: rgba(193, 102, 42, 0.09);
+  --accent-line: rgba(193, 102, 42, 0.3);
+  --green: #2e9c60;
+  --blue: #3f6fb0;
+  --json-str: #4b8a44;
+  --grid: rgba(24, 18, 12, 0.05);
+  --glow: rgba(193, 102, 42, 0.12);
+  --chip-bg: rgba(24, 18, 12, 0.04);
+  --hover: rgba(24, 18, 12, 0.05);
+  --elevate: linear-gradient(180deg, rgba(24, 18, 12, 0.02), transparent);
+  --shadow: 0 30px 60px -30px rgba(80, 50, 20, 0.22);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --color-muted: var(--muted);
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-panel-2: var(--panel-2);
+  --color-code-bg: var(--code-bg);
   --color-border: var(--border);
-  --font-sans: var(--font-geist-mono);
-  --font-mono: var(--font-geist-mono);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-green: var(--green);
+  --color-blue: var(--blue);
+  --color-json-str: var(--json-str);
+  --color-chip-bg: var(--chip-bg);
+  --color-hover: var(--hover);
+
+  /* Backwards-compatible aliases used across existing pages */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+
+  --font-sans: var(--font-ibm-plex-sans);
+  --font-mono: var(--font-ibm-plex-mono);
+  --font-display: var(--font-space-grotesk);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont,
+    sans-serif;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

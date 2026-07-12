@@ -5,6 +5,7 @@ import { projects } from "@content/projects";
 import { caseStudies } from "@content/case-studies";
 import { experience } from "@content/experience";
 import { architecture } from "@content/architecture";
+import { principles } from "@content/principles";
 
 export function getProfile() {
   return profile;
@@ -48,4 +49,8 @@ export function getExperience() {
 
 export function getArchitecture() {
   return architecture;
+}
+
+export function getPrinciples() {
+  return principles;
 }

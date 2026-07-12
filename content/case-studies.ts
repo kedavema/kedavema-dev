@@ -13,6 +13,34 @@ export const caseStudies: CaseStudy[] = [
       "Start with a simple, deterministic MVP architecture (no multi-agent orchestration) and prioritize retrieval quality, grounding, and evaluation over agentic complexity.",
     outcome:
       "Ships describing the current state: deterministic architecture, ingestion/retrieval/generation/evaluation layers, mandatory citations, refusal behavior. Planned deployment: Vercel for frontend, Render for backend, Neon for Postgres/pgvector — final deployment pending. Live demo, screenshots, and evaluation metrics are a fast-follow, not a blocker.",
+    pipeline: [
+      {
+        step: "01 · ingest",
+        title: "Document ingestion",
+        body: "Parse and chunk source documents, then generate embeddings for storage.",
+      },
+      {
+        step: "02 · store",
+        title: "Vector store",
+        body: "Persist vectors in PostgreSQL with pgvector alongside relational metadata.",
+      },
+      {
+        step: "03 · retrieve",
+        title: "Grounded retrieval",
+        body: "Match the most relevant chunks and build a context-bound prompt.",
+      },
+      {
+        step: "04 · evaluate",
+        title: "Evaluation harness",
+        body: "Measure grounding and answer quality with a repeatable test suite.",
+      },
+    ],
+    highlights: [
+      "Mandatory citations tie every answer back to its source chunks.",
+      "Refusal behavior when retrieved context is insufficient — no hallucinated answers.",
+      "Deterministic pipeline designed for reproducible, testable behavior.",
+      "Evaluation harness with pytest so quality is measured, not assumed.",
+    ],
   },
   {
     projectSlug: "coderhouse",

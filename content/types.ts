@@ -42,6 +42,13 @@ export const projectSchema = z.object({
 });
 export type Project = z.infer<typeof projectSchema>;
 
+export const pipelineStepSchema = z.object({
+  step: z.string(),
+  title: z.string(),
+  body: z.string(),
+});
+export type PipelineStep = z.infer<typeof pipelineStepSchema>;
+
 export const caseStudySchema = z.object({
   projectSlug: z.string(),
   problem: z.string(),
@@ -50,8 +57,17 @@ export const caseStudySchema = z.object({
   tradeoffs: z.string(),
   outcome: z.string(),
   relevantWork: z.array(z.string()).optional(),
+  pipeline: z.array(pipelineStepSchema).optional(),
+  highlights: z.array(z.string()).optional(),
 });
 export type CaseStudy = z.infer<typeof caseStudySchema>;
+
+export const principleSchema = z.object({
+  key: z.string(),
+  title: z.string(),
+  body: z.string(),
+});
+export type Principle = z.infer<typeof principleSchema>;
 
 export const experienceEntrySchema = z.object({
   company: z.string(),
