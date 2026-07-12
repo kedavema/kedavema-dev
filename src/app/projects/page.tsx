@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { getProfile, getProjects } from "@/lib/content";
+import { ProjectCard } from "@/components/ui/ProjectCard";
 
 const profileForMetadata = getProfile();
 
@@ -13,24 +13,22 @@ export default function ProjectsPage() {
   const projects = getProjects();
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-2xl font-bold">Projects</h1>
-      <div className="space-y-6">
-        {projects.map((project) => (
-          <Link
+    <div>
+      <h1 className="mb-2.5 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.028em] sm:text-[44px]">
+        Selected work
+      </h1>
+      <p className="mb-9 max-w-[600px] text-[15px] leading-relaxed text-muted">
+        Production systems and the engineering decisions behind them.
+      </p>
+      <div className="flex flex-col gap-3.5">
+        {projects.map((project, index) => (
+          <ProjectCard
             key={project.slug}
-            href={`/projects/${project.slug}`}
-            className="block rounded border border-border p-4 transition-colors hover:border-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-          >
-            <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="break-words font-semibold">{project.name}</h2>
-              {project.employmentDates && (
-                <span className="text-sm text-muted">{project.employmentDates}</span>
-              )}
-            </div>
-            <p className="mt-2 text-sm leading-relaxed">{project.summary}</p>
-            <p className="mt-3 break-words text-xs text-muted">{project.stack.join(" · ")}</p>
-          </Link>
+            index={index + 1}
+            project={project}
+            statusLabel={project.type === "professional" ? "production" : "in development"}
+            statusTone={project.type === "professional" ? "green" : "accent"}
+          />
         ))}
       </div>
     </div>

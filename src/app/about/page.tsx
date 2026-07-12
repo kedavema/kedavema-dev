@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import { getProfile, getExperience, getLanguages } from "@/lib/content";
+import { getPrinciples, getProfile } from "@/lib/content";
+import { SectionEyebrow } from "@/components/ui/SectionEyebrow";
+import { Panel } from "@/components/ui/Panel";
+import { TerminalWindow } from "@/components/ui/TerminalWindow";
 
 const profileForMetadata = getProfile();
 
@@ -9,51 +12,119 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const profile = getProfile();
-  const experience = getExperience();
-  const languages = getLanguages();
+  const principles = getPrinciples();
 
   return (
-    <div className="space-y-10">
-      <section>
-        <h1 className="text-2xl font-bold">{profile.name}</h1>
-        <p className="text-muted">{profile.title}</p>
-        <p className="mt-4 max-w-2xl leading-relaxed">{profile.summary}</p>
-        <p className="mt-2 text-sm text-muted">{profile.location}</p>
-      </section>
-
-      <section>
-        <h2 className="mb-4 text-lg font-semibold text-accent">Experience</h2>
-        <div className="space-y-6">
-          {experience.map((entry) => (
-            <div key={`${entry.company}-${entry.start}`} className="border-l border-border pl-4">
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="break-words font-semibold">
-                  {entry.company} — {entry.role}
-                </h3>
-                <span className="text-sm text-muted">
-                  {entry.start} – {entry.end ?? "Present"}
-                </span>
-              </div>
-              <p className="mt-1 text-sm leading-relaxed">{entry.summary}</p>
-              {entry.stack && (
-                <p className="mt-2 text-xs text-muted">{entry.stack.join(" · ")}</p>
-              )}
-            </div>
-          ))}
+    <div>
+      <div className="mb-11 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-start">
+        <div>
+          <SectionEyebrow tone="accent" className="mb-3.5">
+            ## about
+          </SectionEyebrow>
+          <h1 className="mb-5 font-display text-4xl font-semibold leading-[1.02] tracking-[-0.028em] sm:text-[44px]">
+            Backend-focused,
+            <br />
+            production-minded.
+          </h1>
+          <p className="mb-4 max-w-[600px] text-base leading-relaxed text-muted">
+            Backend-focused full-stack developer with 4+ years building
+            production web platforms end-to-end — backend services, cloud
+            infrastructure, CI/CD, authentication, payments, internal tools,
+            and AI-powered features.
+          </p>
+          <p className="mb-4 max-w-[600px] text-[15px] leading-relaxed text-muted">
+            My strongest focus is backend architecture: designing clean,
+            maintainable systems with domain-driven design, well-defined
+            boundaries, and a bias toward production ownership. I care about
+            the parts that keep a system healthy — observability, testing,
+            security, and infrastructure — not just shipping features.
+          </p>
+          <p className="max-w-[600px] text-[15px] leading-relaxed text-muted">
+            I&apos;ve worked across delivery, fintech, and education products,
+            and I enjoy bringing AI capabilities into real products in a
+            grounded, reliable way.
+          </p>
         </div>
-      </section>
 
-      <section>
-        <h2 className="mb-2 text-lg font-semibold text-accent">Languages</h2>
-        <ul className="space-y-1 text-sm">
-          {languages.map((lang) => (
-            <li key={lang.language}>
-              <span className="font-semibold">{lang.language}:</span> {lang.level}
-            </li>
-          ))}
-        </ul>
-      </section>
+        <TerminalWindow
+          title="profile.json"
+          meta={<span className="font-mono text-[11px] text-green">● live</span>}
+        >
+          <pre className="whitespace-pre-wrap font-mono text-[12.5px] leading-[1.75] text-faint">
+            {"{\n"}
+            {"  "}
+            <span className="text-accent">&quot;role&quot;</span>
+            {": "}
+            <span className="text-json-str">
+              &quot;Backend-focused FS Engineer&quot;
+            </span>
+            {",\n"}
+            {"  "}
+            <span className="text-accent">&quot;location&quot;</span>
+            {": "}
+            <span className="text-json-str">&quot;Paraguay&quot;</span>
+            {",\n"}
+            {"  "}
+            <span className="text-accent">&quot;timezone&quot;</span>
+            {": "}
+            <span className="text-json-str">&quot;GMT-3&quot;</span>
+            {",\n"}
+            {"  "}
+            <span className="text-accent">&quot;experience_years&quot;</span>
+            {": "}
+            <span className="text-blue">4</span>
+            {",\n"}
+            {"  "}
+            <span className="text-accent">&quot;focus&quot;</span>
+            {": ["}
+            <span className="text-json-str">&quot;backend&quot;</span>
+            {", "}
+            <span className="text-json-str">&quot;cloud&quot;</span>
+            {", "}
+            <span className="text-json-str">&quot;AI&quot;</span>
+            {"],\n"}
+            {"  "}
+            <span className="text-accent">&quot;languages&quot;</span>
+            {": {\n"}
+            {"    "}
+            <span className="text-accent">&quot;es&quot;</span>
+            {": "}
+            <span className="text-json-str">&quot;native&quot;</span>
+            {",\n"}
+            {"    "}
+            <span className="text-accent">&quot;en&quot;</span>
+            {": "}
+            <span className="text-json-str">&quot;B2 upper-int&quot;</span>
+            {"\n  },\n"}
+            {"  "}
+            <span className="text-accent">&quot;available&quot;</span>
+            {": "}
+            <span className="text-blue">true</span>
+            {",\n"}
+            {"  "}
+            <span className="text-accent">&quot;remote&quot;</span>
+            {": "}
+            <span className="text-blue">true</span>
+            {"\n}"}
+          </pre>
+        </TerminalWindow>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        {principles.map((principle) => (
+          <Panel key={principle.key}>
+            <div className="mb-2.5 font-mono text-[13px] font-semibold text-accent">
+              {principle.key}
+            </div>
+            <div className="mb-2 font-display text-lg font-semibold">
+              {principle.title}
+            </div>
+            <p className="text-sm leading-relaxed text-muted">
+              {principle.body}
+            </p>
+          </Panel>
+        ))}
+      </div>
     </div>
   );
 }
