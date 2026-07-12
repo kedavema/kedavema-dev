@@ -12,13 +12,13 @@ test.describe("static route navigation", () => {
     await nav.getByRole("link", { name: "projects" }).click();
     await expect(page).toHaveURL("/projects");
 
-    await nav.getByRole("link", { name: "resume" }).click();
+    await nav.getByRole("link", { name: "résumé" }).click();
     await expect(page).toHaveURL("/resume");
 
     await nav.getByRole("link", { name: "contact" }).click();
     await expect(page).toHaveURL("/contact");
 
-    await nav.getByRole("link", { name: "Home" }).click();
+    await nav.getByRole("link", { name: "home" }).click();
     await expect(page).toHaveURL("/");
   });
 

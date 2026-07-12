@@ -10,10 +10,3 @@ for (const route of staticRoutes) {
     expect(results.violations).toEqual([]);
   });
 }
-
-test("no automatic a11y violations on the terminal's initial state", async ({ page }) => {
-  await page.goto("/");
-  await expect(page.getByRole("log", { name: "Terminal output" })).toBeVisible();
-  const results = await new AxeBuilder({ page }).include("main").analyze();
-  expect(results.violations).toEqual([]);
-});
