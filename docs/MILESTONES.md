@@ -59,9 +59,15 @@ Real content (profile, links, skills, featured projects/case studies, experience
 - `getSiteUrl()` (`src/lib/seo/site.ts`) reads `NEXT_PUBLIC_SITE_URL`, falls back to `http://localhost:3000` — **set the env var once a production domain exists**.
 - Verified: `pnpm lint` and `pnpm build` clean; sitemap.xml and JSON-LD manually checked against a production build.
 
-## M6 — Testing & Deploy ⏳ not started
+## M6 — Testing & Deploy ✅ done
 
-Unit/component/e2e/axe coverage, GitHub Actions CI, Vercel production deploy, analytics wired.
+- Unit/component tests (Vitest + Testing Library): `src/lib/content.test.ts`, `src/lib/terminal/{parser,commands}.test.ts`, `src/lib/contact/schema.test.ts`, `src/components/terminal/{CommandLine,TerminalShell}.test.tsx`, `src/components/contact/ContactForm.test.tsx`. 50 tests, `pnpm test`.
+- E2E (Playwright, `e2e/`): static route navigation, full terminal flow (`help → skills → projects → case-study → contact`), contact form submit with `/api/contact` network-mocked (no real Resend calls). `playwright.config.ts` builds+starts a prod server on a configurable `PORT`.
+- Automated a11y (`@axe-core/playwright`, `e2e/accessibility.spec.ts`): zero violations on every static route + the terminal's initial state.
+- GitHub Actions (`.github/workflows/ci.yml`): lint → build → unit tests → Playwright e2e on push/PR to `main`.
+- Vercel Analytics (`@vercel/analytics`) wired into `layout.tsx` — chosen over Plausible (zero extra config on Vercel, no cookie banner needed).
+- Deployed to Vercel production: `kedavemas-projects/mi-pagina`, GitHub repo connected for autodeploy on push to `main`. `NEXT_PUBLIC_SITE_URL` set to the live Vercel URL (`https://mi-pagina-ruddy-ten.vercel.app`) — update this env var + redeploy if/when a custom domain is added.
+- Verified: `pnpm lint`, `pnpm build`, `pnpm test`, and `pnpm exec playwright test` all clean.
 
 ---
 
