@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { KLogo } from "@/components/KLogo";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/cn";
 
@@ -19,21 +20,13 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-bg/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-4 px-4 py-3.5 sm:px-7">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 rounded focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
-        >
-          <span
-            className="flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-[7px] bg-accent shadow-[0_0_0_1px_var(--accent-line),0_4px_16px_var(--accent-soft)]"
-            aria-hidden="true"
-          >
-            <span className="h-2 w-2 rotate-45 rounded-[2px] bg-bg" />
-          </span>
+        <div className="flex items-center gap-2.5">
+          <KLogo />
           <span className="font-display text-[15px] font-semibold tracking-[-0.01em] text-fg">
             Kevin Velázquez
           </span>
           <span className="font-mono text-xs text-faint">~/</span>
-        </Link>
+        </div>
 
         <div className="flex items-center gap-5">
           <nav

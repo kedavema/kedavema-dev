@@ -13,6 +13,8 @@
   --faint: rgba(243, 242, 239, 0.55);
   --accent: #e2894c;
   --accent-2: #ef9a5e;
+  --logo-hover: #ef9a5e;
+  --logo-filter: drop-shadow(0 0 6px rgba(239, 154, 94, 0.35));
   --accent-soft: rgba(226, 137, 76, 0.09);
   --accent-line: rgba(226, 137, 76, 0.28);
   --green: #57c98a;
@@ -44,6 +46,8 @@
   --faint: rgba(27, 23, 20, 0.65);
   --accent: #9f4b18;
   --accent-2: #873b0e;
+  --logo-hover: #b85b22;
+  --logo-filter: none;
   --accent-soft: rgba(159, 75, 24, 0.09);
   --accent-line: rgba(159, 75, 24, 0.3);
   --green: #1e6e3f;
@@ -95,6 +99,90 @@ body {
     sans-serif;
 }
 
+.k-logo {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--accent);
+  border-radius: 6px;
+  transition:
+    color 200ms ease,
+    filter 200ms ease;
+}
+
+.k-logo:hover,
+.k-logo:focus-visible {
+  color: var(--logo-hover);
+  filter: var(--logo-filter);
+}
+
+.k-logo:focus-visible {
+  outline: 2px solid var(--logo-hover);
+  outline-offset: 6px;
+}
+
+.k-logo__svg {
+  display: block;
+  overflow: visible;
+}
+
+.k-logo__pipe {
+  animation: k-logo-pipe 750ms linear both;
+}
+
+.k-logo__chevron {
+  animation: k-logo-chevron 750ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.k-logo:hover .k-logo__chevron,
+.k-logo:focus-visible .k-logo__chevron {
+  animation: k-logo-hover 300ms ease-out;
+}
+
+@keyframes k-logo-pipe {
+  0% {
+    opacity: 0;
+  }
+  6%,
+  28% {
+    opacity: 1;
+  }
+  29%,
+  42% {
+    opacity: 0;
+  }
+  43%,
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes k-logo-chevron {
+  0%,
+  52% {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes k-logo-hover {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(3px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 @keyframes blink {
   50% {
     opacity: 0;
@@ -112,6 +200,15 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .k-logo__pipe,
+  .k-logo__chevron,
+  .k-logo:hover .k-logo__chevron,
+  .k-logo:focus-visible .k-logo__chevron {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+
   *,
   *::before,
   *::after {
