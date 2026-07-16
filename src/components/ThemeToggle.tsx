@@ -26,10 +26,18 @@ export function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-chip-bg px-2.5 py-1.5 font-mono text-xs text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+      className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-border bg-chip-bg px-2 py-1.5 font-mono text-xs text-muted transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent md:px-2.5"
     >
-      <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
-      <span suppressHydrationWarning>{theme === "dark" ? "dark" : "light"}</span>
+      <span
+        className="hidden h-1.5 w-1.5 rounded-full bg-accent md:block"
+        aria-hidden="true"
+      />
+      <span className="md:hidden" aria-hidden="true" suppressHydrationWarning>
+        {theme === "dark" ? "☾" : "☼"}
+      </span>
+      <span className="hidden md:inline" suppressHydrationWarning>
+        {theme === "dark" ? "dark" : "light"}
+      </span>
     </button>
   );
 }

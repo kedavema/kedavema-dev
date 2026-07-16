@@ -1,3 +1,5 @@
+export const SITE_URL = "https://iamkev.vercel.app";
+
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  return SITE_URL;
 }

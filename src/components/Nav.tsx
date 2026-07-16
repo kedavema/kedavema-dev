@@ -19,19 +19,21 @@ export function Nav() {
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-bg/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-4 px-4 py-3.5 sm:px-7">
-        <div className="flex items-center gap-2.5">
+      <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-2 px-3 py-3 md:gap-4 md:px-7 md:py-3.5">
+        <div className="flex shrink-0 items-center gap-2.5">
           <KLogo />
-          <span className="font-display text-[15px] font-semibold tracking-[-0.01em] text-fg">
+          <span className="hidden font-display text-[15px] font-semibold tracking-[-0.01em] text-fg md:inline">
             Kevin Velázquez
           </span>
-          <span className="font-mono text-xs text-faint">~/</span>
+          <span className="hidden font-mono text-xs text-faint md:inline">
+            ~/
+          </span>
         </div>
 
-        <div className="flex items-center gap-5">
+        <div className="flex min-w-0 items-center gap-2 md:gap-5">
           <nav
             aria-label="Main navigation"
-            className="flex flex-wrap gap-5 font-mono text-sm"
+            className="flex items-center gap-2 font-mono text-xs whitespace-nowrap md:gap-5 md:text-sm"
           >
             {links.map((link) => {
               const isActive =
@@ -45,6 +47,7 @@ export function Nav() {
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
                     "rounded py-1 transition-colors hover:text-fg focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent",
+                    link.href === "/" && "hidden md:inline",
                     isActive ? "text-accent" : "text-muted",
                   )}
                 >
