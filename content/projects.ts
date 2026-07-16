@@ -5,6 +5,7 @@ export const projects: Project[] = [
     slug: "ai-knowledge-rag",
     name: "AI Knowledge RAG",
     type: "personal",
+    status: "in development",
     summary:
       "A production-oriented, deterministic RAG application (not multi-agent) focused on document ingestion, retrieval, grounding, and evaluation, with mandatory citations and refusal behavior when context is insufficient.",
     stack: [
@@ -29,6 +30,7 @@ export const projects: Project[] = [
     slug: "coderhouse",
     name: "Coderhouse — Core Platform / Internal Modules",
     type: "professional",
+    status: "production",
     summary:
       "Professional work on a production platform involving a TypeScript microservices monorepo, backend modules, frontend applications, CI/CD, authentication, RBAC, and AWS infrastructure.",
     stack: [
@@ -53,6 +55,7 @@ export const projects: Project[] = [
     slug: "monchis",
     name: "Monchis — Delivery Backend",
     type: "professional",
+    status: "production",
     summary:
       "Backend work on a delivery platform involving RESTful APIs, AWS serverless infrastructure, payment integrations, purchase/cancellation flows, caching, and performance optimization.",
     stack: [

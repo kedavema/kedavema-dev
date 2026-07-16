@@ -67,7 +67,7 @@ export default async function CaseStudyPage({
           {project.roleTitle && project.employmentDates ? (
             <StatusBadge>{project.employmentDates}</StatusBadge>
           ) : (
-            <StatusBadge>production · deterministic</StatusBadge>
+            <StatusBadge>{project.status} · deterministic</StatusBadge>
           )}
         </div>
       )}

@@ -26,8 +26,8 @@ export default function ProjectsPage() {
             key={project.slug}
             index={index + 1}
             project={project}
-            statusLabel={project.type === "professional" ? "production" : "in development"}
-            statusTone={project.type === "professional" ? "green" : "accent"}
+            statusLabel={project.status}
+            statusTone={project.status === "production" ? "green" : "accent"}
           />
         ))}
       </div>

@@ -56,7 +56,7 @@ Real content (profile, links, skills, featured projects/case studies, experience
 - `generateMetadata`/static metadata sourced from `getProfile()` via the content layer on all static routes.
 - Sitemap (`src/app/sitemap.ts`) covering all static routes + project slugs from `getProjects()`.
 - JSON-LD (`src/lib/seo/jsonLd.tsx`): Person + WebSite on the homepage, SoftwareSourceCode per project detail page — no invented data, only content-layer fields.
-- `getSiteUrl()` (`src/lib/seo/site.ts`) reads `NEXT_PUBLIC_SITE_URL`, falls back to `http://localhost:3000` — **set the env var once a production domain exists**.
+- `getSiteUrl()` (`src/lib/seo/site.ts`) reads `NEXT_PUBLIC_SITE_URL`, falls back to `http://localhost:3000` — production should use `https://iamkev.vercel.app`.
 - Verified: `pnpm lint` and `pnpm build` clean; sitemap.xml and JSON-LD manually checked against a production build.
 
 ## M6 — Testing & Deploy ✅ done
@@ -66,7 +66,7 @@ Real content (profile, links, skills, featured projects/case studies, experience
 - Automated a11y (`@axe-core/playwright`, `e2e/accessibility.spec.ts`): zero violations on every static route + the terminal's initial state.
 - GitHub Actions (`.github/workflows/ci.yml`): lint → build → unit tests → Playwright e2e on push/PR to `main`.
 - Vercel Analytics (`@vercel/analytics`) wired into `layout.tsx` — chosen over Plausible (zero extra config on Vercel, no cookie banner needed).
-- Deployed to Vercel production: `kedavemas-projects/mi-pagina`, GitHub repo connected for autodeploy on push to `main`. `NEXT_PUBLIC_SITE_URL` set to the live Vercel URL (`https://mi-pagina-ruddy-ten.vercel.app`) — update this env var + redeploy if/when a custom domain is added.
+- Deployed to Vercel production: `kedavemas-projects/mi-pagina`, GitHub repo connected for autodeploy on push to `main`. Live URL: `https://iamkev.vercel.app`. Keep `NEXT_PUBLIC_SITE_URL` set to this canonical URL and redeploy after any domain change.
 - Verified: `pnpm lint`, `pnpm build`, `pnpm test`, and `pnpm exec playwright test` all clean.
 
 ---

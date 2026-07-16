@@ -27,6 +27,7 @@ export const projectSchema = z.object({
   slug: z.string(),
   name: z.string(),
   type: z.enum(["personal", "professional"]),
+  status: z.enum(["in development", "production"]),
   summary: z.string(),
   stack: z.array(z.string()).min(1),
   featured: z.boolean(),

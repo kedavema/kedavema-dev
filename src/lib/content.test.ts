@@ -53,6 +53,10 @@ describe("content repository", () => {
     expect(getProjectBySlug(first.slug)).toEqual(first);
   });
 
+  it("keeps project lifecycle status in the content source of truth", () => {
+    expect(getProjectBySlug("ai-knowledge-rag")?.status).toBe("in development");
+  });
+
   it("returns undefined for an unknown project slug", () => {
     expect(getProjectBySlug("does-not-exist")).toBeUndefined();
   });

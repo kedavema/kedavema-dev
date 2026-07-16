@@ -18,6 +18,7 @@
   --green: #57c98a;
   --blue: #7fb0e8;
   --json-str: #9ecb8a;
+  --error: #f87171;
   --grid: rgba(255, 255, 255, 0.028);
   --glow: rgba(226, 137, 76, 0.16);
   --chip-bg: rgba(255, 255, 255, 0.05);
@@ -41,15 +42,16 @@
   --fg: #1b1714;
   --muted: rgba(27, 23, 20, 0.68);
   --faint: rgba(27, 23, 20, 0.65);
-  --accent: #c1662a;
-  --accent-2: #a9571f;
-  --accent-soft: rgba(193, 102, 42, 0.09);
-  --accent-line: rgba(193, 102, 42, 0.3);
-  --green: #2e9c60;
+  --accent: #9f4b18;
+  --accent-2: #873b0e;
+  --accent-soft: rgba(159, 75, 24, 0.09);
+  --accent-line: rgba(159, 75, 24, 0.3);
+  --green: #1e6e3f;
   --blue: #3f6fb0;
-  --json-str: #4b8a44;
+  --json-str: #3a7034;
+  --error: #b42318;
   --grid: rgba(24, 18, 12, 0.05);
-  --glow: rgba(193, 102, 42, 0.12);
+  --glow: rgba(159, 75, 24, 0.12);
   --chip-bg: rgba(24, 18, 12, 0.04);
   --hover: rgba(24, 18, 12, 0.05);
   --elevate: linear-gradient(180deg, rgba(24, 18, 12, 0.02), transparent);
@@ -73,6 +75,7 @@
   --color-green: var(--green);
   --color-blue: var(--blue);
   --color-json-str: var(--json-str);
+  --color-error: var(--error);
   --color-chip-bg: var(--chip-bg);
   --color-hover: var(--hover);
 

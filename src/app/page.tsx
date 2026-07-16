@@ -151,7 +151,7 @@ export default function Home() {
             <div>
               <div className="mb-3.5 flex flex-wrap items-center gap-2.5">
                 <SectionEyebrow tone="accent">★ featured project</SectionEyebrow>
-                <StatusBadge>production · deterministic</StatusBadge>
+                <StatusBadge>{featuredProject.status} · deterministic</StatusBadge>
               </div>
               <h2 className="mb-2.5 font-display text-2xl font-semibold tracking-[-0.02em]">
                 {featuredProject.name}

@@ -100,7 +100,7 @@ export function ContactForm({ links, compact = false }: { links: Links; compact?
           aria-describedby={fieldErrors.name ? "name-error" : undefined}
         />
         {fieldErrors.name && (
-          <p id="name-error" role="alert" className="text-xs text-red-400">
+          <p id="name-error" role="alert" className="text-xs text-error">
             {fieldErrors.name[0]}
           </p>
         )}
@@ -120,7 +120,7 @@ export function ContactForm({ links, compact = false }: { links: Links; compact?
           aria-describedby={fieldErrors.email ? "email-error" : undefined}
         />
         {fieldErrors.email && (
-          <p id="email-error" role="alert" className="text-xs text-red-400">
+          <p id="email-error" role="alert" className="text-xs text-error">
             {fieldErrors.email[0]}
           </p>
         )}
@@ -140,7 +140,7 @@ export function ContactForm({ links, compact = false }: { links: Links; compact?
           aria-describedby={fieldErrors.subject ? "subject-error" : undefined}
         />
         {fieldErrors.subject && (
-          <p id="subject-error" role="alert" className="text-xs text-red-400">
+          <p id="subject-error" role="alert" className="text-xs text-error">
             {fieldErrors.subject[0]}
           </p>
         )}
@@ -160,7 +160,7 @@ export function ContactForm({ links, compact = false }: { links: Links; compact?
           aria-describedby={fieldErrors.message ? "message-error" : undefined}
         />
         {fieldErrors.message && (
-          <p id="message-error" role="alert" className="text-xs text-red-400">
+          <p id="message-error" role="alert" className="text-xs text-error">
             {fieldErrors.message[0]}
           </p>
         )}

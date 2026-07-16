@@ -22,10 +22,16 @@ test.describe("static route navigation", () => {
     await expect(page).toHaveURL("/");
   });
 
-  test("navigates from the projects list to a project detail page", async ({ page }) => {
+  test("shows project status consistently across project pages", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByText("in development · deterministic", { exact: true })).toBeVisible();
+
     await page.goto("/projects");
-    await page.getByRole("link", { name: /ai knowledge rag/i }).click();
+    const projectLink = page.getByRole("link", { name: /ai knowledge rag/i });
+    await expect(projectLink).toContainText("in development");
+    await projectLink.click();
     await expect(page).toHaveURL("/projects/ai-knowledge-rag");
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByText("in development · deterministic", { exact: true })).toBeVisible();
   });
 });
