@@ -17,6 +17,14 @@ export const profileSchema = z.object({
   now: z.string(),
   /** Shown as the status line when set. Remove to hide it. */
   availability: z.string().optional(),
+  /** Portrait in /public, already dithered to 1 bit (see docs/MILESTONES.md, M8). */
+  photo: z
+    .object({
+      src: z.string().startsWith("/"),
+      alt: z.string().min(1),
+      size: z.number().int().positive(),
+    })
+    .optional(),
   /** Meta description and JSON-LD description. */
   summary: z.string(),
 });

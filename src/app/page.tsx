@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { DesktopIcons } from "@/components/desktop/DesktopIcons";
 import { OpenDialogButton } from "@/components/desktop/OpenDialogButton";
@@ -32,15 +33,28 @@ export default function Home() {
         <div className="flex min-w-0 flex-[999_1_820px] flex-wrap items-start gap-x-10 gap-y-9">
           <Window title="KEVIN.TXT" badge="1" active titleId="w-kevin" className="flex-[999_1_520px]">
             <div className="flex flex-col gap-[18px]">
-              <div className="flex flex-col gap-2.5">
-                <h1 className="m-0 text-[clamp(52px,7vw,84px)] font-normal leading-[0.86] tracking-[0.5px]">
-                  {firstName}
-                  <br />
-                  {lastNames.join(" ")}
-                </h1>
-                <p className="m-0 text-accent">
-                  {profile.title} · from {profile.hometown}, based in {profile.location.split(",")[0]}
-                </p>
+              <div className="flex flex-wrap items-end gap-x-7 gap-y-5">
+                {profile.photo && (
+                  <Image
+                    src={profile.photo.src}
+                    alt={profile.photo.alt}
+                    width={profile.photo.size}
+                    height={profile.photo.size}
+                    unoptimized
+                    priority
+                    className="shrink-0 border-2 border-ink [image-rendering:pixelated]"
+                  />
+                )}
+                <div className="flex min-w-0 flex-[1_1_300px] flex-col gap-2.5">
+                  <h1 className="m-0 text-[clamp(52px,7vw,84px)] font-normal leading-[0.86] tracking-[0.5px]">
+                    {firstName}
+                    <br />
+                    {lastNames.join(" ")}
+                  </h1>
+                  <p className="m-0 text-accent">
+                    {profile.title} · from {profile.hometown}, based in {profile.location.split(",")[0]}
+                  </p>
+                </div>
               </div>
               <p className="m-0 max-w-[48ch] text-[26px] leading-[1.2]">{profile.lead}</p>
               <dl className="m-0 grid max-w-[62ch] grid-cols-[minmax(0,8ch)_minmax(0,1fr)] gap-x-[1ch] gap-y-1.5">

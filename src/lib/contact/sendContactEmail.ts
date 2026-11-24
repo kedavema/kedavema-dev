@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import type { ContactInput } from "./schema";
+import { senderAddress, telegramHtml, telegramSubject, telegramText } from "./telegramEmail";
 
 export function isContactConfigured(): boolean {
   return Boolean(
@@ -7,6 +8,7 @@ export function isContactConfigured(): boolean {
   );
 }
 
+/** Sends a telegram from the site to Kevin's inbox. Replying goes straight to the visitor. */
 export async function sendContactEmail(input: Omit<ContactInput, "company">): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_FROM_EMAIL;
@@ -16,21 +18,16 @@ export async function sendContactEmail(input: Omit<ContactInput, "company">): Pr
     throw new Error("Contact email is not configured.");
   }
 
+  const telegram = { name: input.name, email: input.email, message: input.message, receivedAt: new Date() };
   const resend = new Resend(apiKey);
 
   const { error } = await resend.emails.send({
-    from,
+    from: senderAddress(from),
     to,
     replyTo: input.email,
-    subject: `[Portfolio contact] ${input.subject}`,
-    text: [
-      `Source: portfolio contact form`,
-      `Name: ${input.name}`,
-      `Email: ${input.email}`,
-      `Subject: ${input.subject}`,
-      "",
-      input.message,
-    ].join("\n"),
+    subject: telegramSubject(telegram),
+    text: telegramText(telegram),
+    html: telegramHtml(telegram),
   });
 
   if (error) {

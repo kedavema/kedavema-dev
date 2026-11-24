@@ -9,6 +9,7 @@ export const profile: Profile = profileSchema.parse({
   lead: "I build identity verification, sign-in, payments and the AWS infrastructure under them. Five years across fintech, delivery and education, mostly TypeScript on PostgreSQL.",
   now: "Mango, a digital wallet in Paraguay. KYC onboarding: face matching that catches duplicate accounts and verification jobs that recover on their own.",
   availability: "Open to remote roles.",
+  photo: { src: "/kevin.png", alt: "Portrait of Kevin Velázquez, smiling", size: 160 },
   summary:
     "Senior backend engineer in Asunción, Paraguay. Identity verification, sign-in, payments and AWS infrastructure, mostly in TypeScript and PostgreSQL.",
 });
