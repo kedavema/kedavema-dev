@@ -3,9 +3,7 @@ import { expect, test } from "@playwright/test";
 const logoName = "Kevin Velázquez — home";
 
 test.describe("animated K logo", () => {
-  test("uses the specified construction and interaction animations", async ({
-    page,
-  }) => {
+  test("uses the specified construction and interaction animations", async ({ page }) => {
     await page.goto("/");
 
     const logo = page.getByRole("link", { name: logoName });
@@ -32,29 +30,16 @@ test.describe("animated K logo", () => {
     await expect(chevron).toHaveCSS("animation-name", "k-logo-hover");
     await expect(chevron).toHaveCSS("animation-duration", "0.3s");
 
-    await expect(page.locator('link[rel="icon"]')).toHaveAttribute(
-      "href",
-      /\/icon\.svg/,
-    );
+    await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", /\/icon\.svg/);
   });
 
-  test("uses the approved colors in both themes", async ({ page }) => {
+  test("uses dark orange on the menu bar and darkens on hover", async ({ page }) => {
     await page.goto("/");
 
-    const darkLogo = page.getByRole("link", { name: logoName });
-    await expect(darkLogo).toHaveCSS("color", "rgb(226, 137, 76)");
-    await darkLogo.hover();
-    await expect(darkLogo).toHaveCSS("color", "rgb(239, 154, 94)");
-
-    await page.mouse.move(0, 0);
-    await page.evaluate(() => localStorage.setItem("theme", "light"));
-    await page.reload();
-
-    const lightLogo = page.getByRole("link", { name: logoName });
-    await expect(lightLogo).toHaveCSS("color", "rgb(159, 75, 24)");
-    await lightLogo.hover();
-    await expect(lightLogo).toHaveCSS("color", "rgb(184, 91, 34)");
-    await expect(lightLogo).toHaveCSS("filter", "none");
+    const logo = page.getByRole("link", { name: logoName });
+    await expect(logo).toHaveCSS("color", "rgb(154, 60, 11)");
+    await logo.hover();
+    await expect(logo).toHaveCSS("color", "rgb(11, 15, 14)");
   });
 
   test("disables motion when reduced motion is requested", async ({ page }) => {
@@ -62,14 +47,7 @@ test.describe("animated K logo", () => {
     await page.goto("/");
 
     const logo = page.getByRole("link", { name: logoName });
-
-    await expect(logo.locator(".k-logo__pipe")).toHaveCSS(
-      "animation-name",
-      "none",
-    );
-    await expect(logo.locator(".k-logo__chevron")).toHaveCSS(
-      "animation-name",
-      "none",
-    );
+    await expect(logo.locator(".k-logo__pipe")).toHaveCSS("animation-name", "none");
+    await expect(logo.locator(".k-logo__chevron")).toHaveCSS("animation-name", "none");
   });
 });

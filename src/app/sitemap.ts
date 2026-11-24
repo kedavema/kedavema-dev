@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getProjects } from "@/lib/content";
+import { getCaseStudies } from "@/lib/content";
 import { getSiteUrl } from "@/lib/seo/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const staticRoutes = ["/", "/about", "/projects", "/resume", "/contact"];
-  const projectRoutes = getProjects().map((project) => `/projects/${project.slug}`);
+  const staticRoutes = ["/", "/contact"];
+  const caseStudyRoutes = getCaseStudies().map((caseStudy) => `/work/${caseStudy.slug}`);
 
-  return [...staticRoutes, ...projectRoutes].map((route) => ({
+  return [...staticRoutes, ...caseStudyRoutes].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
   }));

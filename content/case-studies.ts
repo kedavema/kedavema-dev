@@ -2,91 +2,71 @@ import { caseStudySchema, type CaseStudy } from "./types";
 
 export const caseStudies: CaseStudy[] = [
   {
-    projectSlug: "ai-knowledge-rag",
-    problem:
-      "Build a reliable document Q&A system that answers only from ingested documents, always cites sources, and refuses when context is insufficient.",
-    approach:
-      "Implement ingestion, chunking, embeddings, retrieval, answer generation with mandatory citations, and refusal behavior — a deterministic pipeline, not an agent loop.",
-    architectureNotes:
-      "Separate ingestion pipeline, retrieval layer, answer generation service, evaluation/tests, and API boundaries. Async SQLAlchemy + Alembic handle schema evolution; the LLM provider is abstracted/decoupled so it isn't hard-locked to OpenAI.",
-    tradeoffs:
-      "Start with a simple, deterministic MVP architecture (no multi-agent orchestration) and prioritize retrieval quality, grounding, and evaluation over agentic complexity.",
-    outcome:
-      "Ships describing the current state: deterministic architecture, ingestion/retrieval/generation/evaluation layers, mandatory citations, refusal behavior. Planned deployment: Vercel for frontend, Render for backend, Neon for Postgres/pgvector — final deployment pending. Live demo, screenshots, and evaluation metrics are a fast-follow, not a blocker.",
-    pipeline: [
-      {
-        step: "01 · ingest",
-        title: "Document ingestion",
-        body: "Parse and chunk source documents, then generate embeddings for storage.",
-      },
-      {
-        step: "02 · store",
-        title: "Vector store",
-        body: "Persist vectors in PostgreSQL with pgvector alongside relational metadata.",
-      },
-      {
-        step: "03 · retrieve",
-        title: "Grounded retrieval",
-        body: "Match the most relevant chunks and build a context-bound prompt.",
-      },
-      {
-        step: "04 · evaluate",
-        title: "Evaluation harness",
-        body: "Measure grounding and answer quality with a repeatable test suite.",
-      },
+    slug: "mango",
+    file: "MANGO.TXT",
+    kicker: "Mango Payment · Backend Engineer · Jan 2026 – now",
+    title: "An identity check that never gets stuck halfway",
+    lead: "Mango is a digital wallet in Paraguay. Before someone can use it, we confirm who they are and that they don't already have an account. I work on the backend of that onboarding.",
+    glance: [
+      { label: "Role", value: "Backend Engineer" },
+      { label: "Area", value: "KYC onboarding · account security" },
+      { label: "Testing & docs", value: "Vitest · OpenAPI" },
     ],
-    highlights: [
-      "Mandatory citations tie every answer back to its source chunks.",
-      "Refusal behavior when retrieved context is insufficient — no hallucinated answers.",
-      "Deterministic pipeline designed for reproducible, testable behavior.",
-      "Evaluation harness with pytest so quality is measured, not assumed.",
+    sections: [
+      {
+        heading: "The problem",
+        paragraphs: [
+          "Verification depends on outside services that can be slow or fail, and the same person sometimes tries to register twice. A new user can't be left waiting forever, and a duplicate account can't slip through.",
+        ],
+      },
+      {
+        heading: "What I built",
+        items: [
+          "Face matching against existing accounts, so duplicate registrations go to a review queue instead of being approved.",
+          "An asynchronous verification flow with retries, concurrency limits and atomic state changes, so two workers never process the same check.",
+          "Expiry and recovery paths: a check that times out lands in a known state and can be picked up again.",
+          "Back-office APIs, dashboard endpoints and an audit history for the team that investigates flagged cases.",
+          "Trusted-device registration, sign-in, password recovery and the handling of biometric exceptions.",
+          "Vitest coverage and OpenAPI docs for the verification and identity flows.",
+        ],
+      },
     ],
   },
   {
-    projectSlug: "coderhouse",
-    problem:
-      "Build and maintain core platform capabilities while supporting multiple vertical business modules across backend, frontend, and infrastructure.",
-    approach:
-      "Contributed to a TypeScript microservices monorepo with shared conventions, tooling, CI/CD, and domain-oriented modules.",
-    architectureNotes:
-      "High-level notes on monorepo structure, NestJS services, Prisma/PostgreSQL data access, Redis/Valkey usage, frontend integration, RBAC, OTP authentication, and AWS infrastructure managed through Terraform.",
-    tradeoffs:
-      "Keep the description high-level and professional — focus on ownership, architecture, maintainability, and production impact without exposing confidential implementation details.",
-    outcome:
-      "Concrete metrics not yet confirmed for public use — description stays scoped to ownership and architecture until safe, confirmed outcomes are available.",
-    relevantWork: [
-      "Certificate issuance",
-      "Licensing and subscriptions",
-      "Staff/instructor management",
-      "Backoffice reporting",
-      "Centralized RBAC",
-      "OTP authentication migration",
+    slug: "ai-knowledge-rag",
+    file: "RAG.TXT",
+    kicker: "Side project · 2026 · in progress",
+    title: "Answers from your own documents, with sources",
+    lead: "A question-answering service over a set of documents. Every answer cites the passages it used, and when the documents don't cover the question it says so instead of guessing.",
+    glance: [
+      { label: "Status", value: "In progress" },
+      { label: "Backend", value: "Python · FastAPI · PostgreSQL + pgvector" },
+      { label: "Frontend", value: "Next.js · TypeScript" },
+      { label: "Tests", value: "pytest · Vitest" },
     ],
-  },
-  {
-    projectSlug: "monchis",
-    problem:
-      "Support delivery platform features requiring reliable APIs, payment flows, merchant/product data, backoffice workflows, and improved backend performance.",
-    approach:
-      "Implemented and optimized RESTful APIs on AWS Lambda and API Gateway, integrated payment methods, improved database performance, and used Redis caching.",
-    architectureNotes:
-      "High-level notes on serverless API endpoints, purchase and cancellation flows, payment integrations, caching strategy, database optimization, and backoffice/admin workflows.",
-    tradeoffs:
-      "Focus on practical backend impact — performance, reliability, integrations, and operational workflows.",
-    outcome: "Response time reduction of up to 40% (confirmed). Additional metrics not yet confirmed.",
-    relevantWork: [
-      "RESTful APIs on AWS Lambda/API Gateway",
-      "Response time improvements up to 40%",
-      "Pix/PagoPar payment integrations",
-      "Upay payment integration",
-      "Purchase and cancellation flows",
-      "SQL query optimization",
-      "Redis caching",
-      "Personalized top products",
-      "Merchant rankings",
-      "Merchant activation/deactivation workflows",
-      "Push notification migration to Google HTTP v1",
-      "CSV-based product update workflows",
+    sections: [
+      {
+        heading: "The goal",
+        paragraphs: [
+          "A document Q&A service that only answers from what it has ingested, always cites its sources, and refuses when the retrieved context isn't enough to answer.",
+        ],
+      },
+      {
+        heading: "How it works",
+        items: [
+          "Ingestion parses and chunks documents, then stores their embeddings in PostgreSQL with pgvector, next to the relational metadata.",
+          "Retrieval picks the most relevant chunks and builds a prompt limited to that context.",
+          "Generation has to cite the chunks it used, and refuses when retrieval comes back weak.",
+          "An evaluation suite in pytest checks grounding and answer quality on every change.",
+          "The model provider sits behind an interface, so it can be swapped without touching the pipeline.",
+        ],
+      },
+      {
+        heading: "Why it's built this way",
+        paragraphs: [
+          "It's a fixed pipeline with no agent loop. The same question goes through the same steps, which makes it easy to test, and for this kind of tool retrieval quality matters more than autonomy. Async SQLAlchemy and Alembic keep the schema easy to evolve.",
+        ],
+      },
     ],
   },
 ].map((caseStudy) => caseStudySchema.parse(caseStudy));

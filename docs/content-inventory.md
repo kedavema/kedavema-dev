@@ -1,5 +1,7 @@
 # Content Inventory — Portfolio (M0)
 
+> **Historical.** This was the M0 inventory. Since the M7 redesign (Nov 2026) the source of truth is `content/` plus the 2026 CV in `public/resume.pdf`. Several facts below are out of date (Coderhouse dates, the 40% Monchis metric, which is no longer claimed).
+
 Status: draft for review. This document is the single source of real content that will be typed into `content/` during M1. Nothing here is placeholder text; anything not yet confirmed is marked **TODO**.
 
 ---

@@ -2,9 +2,13 @@ import { profileSchema, type Profile } from "./types";
 
 export const profile: Profile = profileSchema.parse({
   name: "Kevin Velázquez",
-  title: "Backend-focused Full-stack Engineer",
-  location: "Paraguay (GMT-3)",
+  title: "Senior Backend Engineer",
+  location: "Asunción, Paraguay",
+  hometown: "Ypacaraí",
   email: "kedavema@gmail.com",
+  lead: "I build identity verification, sign-in, payments and the AWS infrastructure under them. Five years across fintech, delivery and education, mostly TypeScript on PostgreSQL.",
+  now: "Mango, a digital wallet in Paraguay. KYC onboarding: face matching that catches duplicate accounts and verification jobs that recover on their own.",
+  availability: "Open to remote roles.",
   summary:
-    "Backend-focused full-stack developer with 4+ years of experience building production web platforms end-to-end. Experience spans backend services, frontend applications, cloud infrastructure, CI/CD, authentication, payments, internal tools, and AI-powered features. Strongest focus: backend architecture, TypeScript, Node.js/NestJS, Python/Django/FastAPI, PostgreSQL, AWS serverless, clean architectures, domain-driven design, and production ownership.",
+    "Senior backend engineer in Asunción, Paraguay. Identity verification, sign-in, payments and AWS infrastructure, mostly in TypeScript and PostgreSQL.",
 });

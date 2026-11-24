@@ -1,68 +1,66 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("static route navigation", () => {
-  test("keeps the mobile header navigation on one line", async ({ page }) => {
+test.describe("desktop navigation", () => {
+  test("fits a 320px phone without horizontal scroll", async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 720 });
     await page.goto("/");
 
-    const header = page.getByRole("banner");
-    const nav = page.getByRole("navigation");
-    const mobileLinks = ["about", "projects", "résumé", "contact"];
-
-    await expect(nav.getByRole("link", { name: "home" })).toBeHidden();
-    await expect(
-      page.getByRole("link", { name: "Kevin Velázquez — home" }),
-    ).toBeVisible();
-    await expect(page.getByRole("button", { name: "Toggle theme" })).toBeVisible();
-
-    const linkTops = await Promise.all(
-      mobileLinks.map(async (name) => {
-        const link = nav.getByRole("link", { name });
-        await expect(link).toBeVisible();
-        return (await link.boundingBox())?.y;
-      }),
-    );
-
-    expect(linkTops.every((top) => top === linkTops[0])).toBe(true);
-    expect((await header.boundingBox())?.height).toBeLessThanOrEqual(56);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Velázquez");
+    await expect(page.getByRole("button", { name: "Work", exact: true })).toBeVisible();
     expect(
-      await page.evaluate(
-        () => document.documentElement.scrollWidth <= window.innerWidth,
-      ),
+      await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
     ).toBe(true);
   });
 
-  test("navigates through the main nav links", async ({ page }) => {
+  test("opens a job from the Work menu and follows it to the case study", async ({ page }) => {
     await page.goto("/");
+
+    await page.getByRole("button", { name: "Work", exact: true }).click();
+    await page.locator("#menu-work").getByRole("button", { name: /Mango Payment/ }).click();
+
+    const job = page.getByRole("dialog", { name: "MANGOPAY.REC" });
+    await expect(job).toBeVisible();
+    await expect(job).toContainText("Backend Engineer");
+
+    await job.getByRole("link", { name: /Case study/ }).click();
+    await expect(page).toHaveURL("/work/mango");
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+
+    await page.getByRole("link", { name: /Back to the desktop/ }).click();
+    await expect(page).toHaveURL(/\/#work-db$/);
+  });
+
+  test("opens a record from WORK.DB and closes it with Escape", async ({ page }) => {
+    await page.goto("/");
+
+    await page.getByRole("button", { name: /Coderhouse/ }).first().click();
+    const job = page.getByRole("dialog", { name: "CODERHOU.REC" });
+    await expect(job).toBeVisible();
+
+    await page.keyboard.press("Escape");
+    await expect(job).toBeHidden();
+  });
+
+  test("links the résumé PDF", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.getByRole("link", { name: "RESUME.PDF" })).toHaveAttribute("href", "/resume.pdf");
+  });
+
+  test("redirects the old routes", async ({ page }) => {
+    await page.goto("/about");
     await expect(page).toHaveURL("/");
-    const nav = page.getByRole("navigation");
 
-    await nav.getByRole("link", { name: "about" }).click();
-    await expect(page).toHaveURL("/about");
+    await page.goto("/projects/ai-knowledge-rag");
+    await expect(page).toHaveURL("/work/ai-knowledge-rag");
 
-    await nav.getByRole("link", { name: "projects" }).click();
-    await expect(page).toHaveURL("/projects");
-
-    await nav.getByRole("link", { name: "résumé" }).click();
-    await expect(page).toHaveURL("/resume");
-
-    await nav.getByRole("link", { name: "contact" }).click();
-    await expect(page).toHaveURL("/contact");
-
-    await nav.getByRole("link", { name: "home" }).click();
+    await page.goto("/projects/monchis");
     await expect(page).toHaveURL("/");
   });
 
-  test("shows project status consistently across project pages", async ({ page }) => {
-    await page.goto("/");
-    await expect(page.getByText("in development · deterministic", { exact: true })).toBeVisible();
-
-    await page.goto("/projects");
-    const projectLink = page.getByRole("link", { name: /ai knowledge rag/i });
-    await expect(projectLink).toContainText("in development");
-    await projectLink.click();
-    await expect(page).toHaveURL("/projects/ai-knowledge-rag");
-    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await expect(page.getByText("in development · deterministic", { exact: true })).toBeVisible();
+  test("shows a file-not-found window for unknown pages", async ({ page }) => {
+    const response = await page.goto("/nope");
+    expect(response?.status()).toBe(404);
+    await expect(page.getByText("File not found.")).toBeVisible();
   });
 });

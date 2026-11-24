@@ -1,123 +1,354 @@
 @import "tailwindcss";
 
-:root,
-[data-theme="dark"] {
-  --bg: #08090a;
-  --panel: #0c0d0f;
-  --panel-2: rgba(255, 255, 255, 0.018);
-  --code-bg: #0e0f12;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.13);
-  --fg: #f3f2ef;
-  --muted: rgba(243, 242, 239, 0.6);
-  --faint: rgba(243, 242, 239, 0.55);
+/*
+ * kedavema desktop: a text-mode desktop with windows on a guitar wallpaper.
+ * One look only (dark desktop, light menu and status bars), so there is no theme switch.
+ */
+:root {
+  --desk: #0f2a27;
+  --win: #0b0f0e;
+  --well: #050807;
+  --ink: #e9e4d6;
+  --dim: #9a958a;
+  --line: #3a4a47;
+  --frame: #6f7a77;
+  --title-off: #3a4a47;
+  --title-off-ink: #c9c3b3;
   --accent: #e2894c;
-  --accent-2: #ef9a5e;
-  --logo-hover: #ef9a5e;
-  --logo-filter: drop-shadow(0 0 6px rgba(239, 154, 94, 0.35));
-  --accent-soft: rgba(226, 137, 76, 0.09);
-  --accent-line: rgba(226, 137, 76, 0.28);
-  --green: #57c98a;
-  --blue: #7fb0e8;
-  --json-str: #9ecb8a;
-  --error: #f87171;
-  --grid: rgba(255, 255, 255, 0.028);
-  --glow: rgba(226, 137, 76, 0.16);
-  --chip-bg: rgba(255, 255, 255, 0.05);
-  --hover: rgba(255, 255, 255, 0.06);
-  --elevate: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.008)
-  );
-  --shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.8);
+  --accent-dark: #9a3c0b;
+  --link: #f2c14e;
+  --link-hover: #ffd978;
+  --ok: #a6d36b;
+  --error: #ff9b8f;
+  --bar: #e9e4d6;
+  --bar-ink: #0b0f0e;
   color-scheme: dark;
 }
 
-[data-theme="light"] {
-  --bg: #f3f1ec;
-  --panel: #ffffff;
-  --panel-2: rgba(24, 18, 12, 0.02);
-  --code-bg: #faf7f1;
-  --border: rgba(24, 18, 12, 0.1);
-  --border-strong: rgba(24, 18, 12, 0.16);
-  --fg: #1b1714;
-  --muted: rgba(27, 23, 20, 0.68);
-  --faint: rgba(27, 23, 20, 0.65);
-  --accent: #9f4b18;
-  --accent-2: #873b0e;
-  --logo-hover: #b85b22;
-  --logo-filter: none;
-  --accent-soft: rgba(159, 75, 24, 0.09);
-  --accent-line: rgba(159, 75, 24, 0.3);
-  --green: #1e6e3f;
-  --blue: #3f6fb0;
-  --json-str: #3a7034;
-  --error: #b42318;
-  --grid: rgba(24, 18, 12, 0.05);
-  --glow: rgba(159, 75, 24, 0.12);
-  --chip-bg: rgba(24, 18, 12, 0.04);
-  --hover: rgba(24, 18, 12, 0.05);
-  --elevate: linear-gradient(180deg, rgba(24, 18, 12, 0.02), transparent);
-  --shadow: 0 30px 60px -30px rgba(80, 50, 20, 0.22);
+@theme inline {
+  --color-desk: var(--desk);
+  --color-win: var(--win);
+  --color-well: var(--well);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-line: var(--line);
+  --color-frame: var(--frame);
+  --color-title-off: var(--title-off);
+  --color-title-off-ink: var(--title-off-ink);
+  --color-accent: var(--accent);
+  --color-accent-dark: var(--accent-dark);
+  --color-link: var(--link);
+  --color-ok: var(--ok);
+  --color-error: var(--error);
+  --color-bar: var(--bar);
+  --color-bar-ink: var(--bar-ink);
+
+  --font-sans: var(--font-vt323), ui-monospace, Menlo, Consolas, monospace;
+  --font-mono: var(--font-vt323), ui-monospace, Menlo, Consolas, monospace;
 }
 
-@theme inline {
-  --color-bg: var(--bg);
-  --color-panel: var(--panel);
-  --color-panel-2: var(--panel-2);
-  --color-code-bg: var(--code-bg);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-  --color-fg: var(--fg);
-  --color-muted: var(--muted);
-  --color-faint: var(--faint);
-  --color-accent: var(--accent);
-  --color-accent-2: var(--accent-2);
-  --color-accent-soft: var(--accent-soft);
-  --color-accent-line: var(--accent-line);
-  --color-green: var(--green);
-  --color-blue: var(--blue);
-  --color-json-str: var(--json-str);
-  --color-error: var(--error);
-  --color-chip-bg: var(--chip-bg);
-  --color-hover: var(--hover);
-
-  /* Backwards-compatible aliases used across existing pages */
-  --color-background: var(--bg);
-  --color-foreground: var(--fg);
-
-  --font-sans: var(--font-ibm-plex-sans);
-  --font-mono: var(--font-ibm-plex-mono);
-  --font-display: var(--font-space-grotesk);
+html {
+  background: var(--desk);
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont,
-    sans-serif;
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  line-height: 1.25;
 }
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 3px solid var(--link);
+  outline-offset: 2px;
+}
+
+.link {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.link:hover {
+  color: var(--link-hover);
+  text-decoration-thickness: 2px;
+}
+
+/* ---------- Windows ---------- */
+
+.shadow-block {
+  box-shadow: 14px 14px 0 var(--well);
+}
+
+@keyframes win-open {
+  0% {
+    transform: scaleY(0.05);
+    opacity: 0.5;
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+  }
+}
+.win-open {
+  animation: win-open 360ms steps(6, end) both;
+}
+
+/* Buttons drawn like a text-mode dialog: label in angle brackets, solid shadow. */
+.dos {
+  display: inline-block;
+  min-height: 40px;
+  padding: 4px 18px;
+  box-sizing: border-box;
+  border: 0;
+  background: var(--bar);
+  color: var(--bar-ink);
+  box-shadow: 8px 8px 0 var(--well);
+  font: inherit;
+  line-height: 32px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.dos:hover {
+  background: var(--accent);
+  color: var(--bar-ink);
+}
+.dos:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.dos-hot {
+  background: var(--accent);
+}
+.dos-hot:hover {
+  background: var(--bar);
+}
+
+/* ---------- Menu bar ---------- */
+
+.menu-button {
+  min-height: 36px;
+  padding: 4px 12px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.menu-button:hover,
+.menu-button[aria-expanded="true"] {
+  background: var(--win);
+  color: var(--ink);
+}
+.menu-button .hotkey {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+.menu-button:hover .hotkey,
+.menu-button[aria-expanded="true"] .hotkey {
+  color: var(--accent);
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 2ch;
+  width: 100%;
+  min-height: 36px;
+  padding: 4px 16px;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.menu-item:hover,
+.menu-item:focus-visible {
+  background: var(--accent);
+  color: var(--bar-ink);
+}
+.menu-item:hover *,
+.menu-item:focus-visible * {
+  color: inherit !important;
+}
+
+.status-key {
+  min-height: 32px;
+  padding: 2px 10px;
+  border: 0;
+  background: transparent;
+  color: var(--bar-ink);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.status-key:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Desktop icons ---------- */
+
+.desk-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 96px;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.desk-icon .desk-icon-label {
+  background: var(--win);
+  padding: 0 6px;
+}
+.desk-icon:hover .desk-icon-label {
+  background: var(--accent);
+  color: var(--bar-ink);
+}
+
+
+/* ---------- WORK.DB rows ---------- */
+
+.db-row {
+  display: grid;
+  grid-template-columns: 6ch minmax(0, 1fr);
+  gap: 1ch;
+  width: 100%;
+  min-height: 36px;
+  padding: 3px 10px;
+  box-sizing: border-box;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.db-row:hover .db-row-name {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.db-row[aria-current="true"] {
+  background: var(--accent);
+  color: var(--bar-ink);
+}
+.db-row[aria-current="true"] .db-row-role {
+  color: var(--bar-ink);
+}
+
+/* ---------- Dialog windows ---------- */
+
+dialog.window-dialog {
+  /* Tailwind's reset zeroes margins; a modal dialog needs auto margins to center. */
+  margin: auto;
+  width: min(100% - 32px, 680px);
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  overflow: visible;
+}
+dialog.window-dialog::backdrop {
+  background: rgb(5 8 7 / 0.6);
+}
+
+/* ---------- Telegram form ---------- */
+
+.field {
+  width: 100%;
+  box-sizing: border-box;
+  border: 2px solid var(--frame);
+  background: var(--well);
+  color: var(--ink);
+  font: inherit;
+  padding: 6px 10px;
+}
+.field:focus {
+  border-color: var(--accent);
+}
+
+/* ---------- Wallpaper ---------- */
+
+.wallpaper-rosette {
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle,
+      #0a1f1c 0 49%,
+      transparent 49.5% 56%,
+      rgb(233 228 214 / 0.12) 56% 57%,
+      transparent 57.5% 100%
+    ),
+    repeating-conic-gradient(
+      rgb(226 137 76 / 0.22) 0deg 5deg,
+      rgb(242 193 78 / 0.16) 5deg 10deg,
+      rgb(233 228 214 / 0.06) 10deg 15deg
+    );
+  mask-image: radial-gradient(circle, #000 0 66%, transparent 67%);
+}
+
+/* ---------- Boot screen ---------- */
+
+.boot-screen {
+  display: none;
+}
+html[data-boot] .boot-screen {
+  display: flex;
+}
+@keyframes boot-line {
+  from {
+    visibility: hidden;
+  }
+  to {
+    visibility: visible;
+  }
+}
+.boot-line {
+  animation: boot-line 0s steps(1, end) both;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+.blink {
+  animation: blink 1s steps(1, end) infinite;
+}
+
+/* ---------- K logo ---------- */
 
 .k-logo {
   display: inline-flex;
   flex-shrink: 0;
-  color: var(--accent);
+  color: var(--accent-dark);
   border-radius: 6px;
-  transition:
-    color 200ms ease,
-    filter 200ms ease;
+  transition: color 200ms ease;
 }
 
 .k-logo:hover,
 .k-logo:focus-visible {
-  color: var(--logo-hover);
-  filter: var(--logo-filter);
+  color: var(--bar-ink);
 }
 
 .k-logo:focus-visible {
-  outline: 2px solid var(--logo-hover);
-  outline-offset: 6px;
+  outline: 2px solid var(--bar-ink);
+  outline-offset: 4px;
 }
 
 .k-logo__svg {
@@ -183,22 +414,6 @@ body {
   }
 }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
-@keyframes pulseDot {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .k-logo__pipe,
   .k-logo__chevron,
@@ -213,6 +428,7 @@ body {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
