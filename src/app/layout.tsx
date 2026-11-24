@@ -1,39 +1,58 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { VT323 } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
-import { Nav } from "@/components/Nav";
-import { Breadcrumb } from "@/components/Breadcrumb";
-import { getProfile } from "@/lib/content";
+import { BOOT_INIT_SCRIPT, type BootLine } from "@/components/desktop/BootScreen";
+import { DesktopShell } from "@/components/desktop/DesktopShell";
+import { toDesktopJobs } from "@/components/desktop/jobs";
+import { getExperience, getLinks, getProfile } from "@/lib/content";
+import { toDosName } from "@/lib/dosName";
 import { getSiteUrl } from "@/lib/seo/site";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const vt323 = VT323({
+  variable: "--font-vt323",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: "400",
 });
-
-const ibmPlexMono = IBM_Plex_Mono({
-  variable: "--font-ibm-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t="dark";}document.documentElement.setAttribute("data-theme",t);}catch(e){}})();`;
 
 const profile = getProfile();
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: `${profile.name} — ${profile.title}`,
+  title: `${profile.name} · ${profile.title}`,
   description: profile.summary,
 };
+
+function bootScreen(): { header: string[]; lines: BootLine[] } {
+  const experience = getExperience();
+  const now = new Date();
+  const firstStart = experience.map((entry) => entry.start).sort()[0];
+  const [firstYear, firstMonth] = firstStart.split("-").map(Number);
+  const months = (now.getUTCFullYear() - firstYear) * 12 + (now.getUTCMonth() + 1 - firstMonth);
+  const years = Math.floor(months / 12);
+
+  return {
+    header: [
+      `kedavema BIOS v1.0 · built in ${profile.location.split(",")[0]}`,
+      `Copyright (C) ${firstYear}-${now.getUTCFullYear()} ${profile.name}`,
+    ],
+    lines: [
+      { label: "Main processor", value: "one backend engineer" },
+      { label: "Memory test", value: "640K", ok: true },
+      { label: "Experience", value: `${years} years in production`, ok: true },
+      { label: "Location", value: `${profile.location} (UTC-3)`, ok: true },
+      { label: "Hometown", value: `${profile.hometown}, ex Tacuaral`, ok: true },
+      {
+        label: "Mounting /work",
+        value: experience.map((entry) => toDosName(entry.company, "x").split(".")[0].toLowerCase()).join(" "),
+      },
+      { label: "Loading", value: "kevin.txt work.db stack.cfg" },
+      ...(profile.availability
+        ? [{ label: "Status", value: profile.availability.replace(/\.$/, "").toLowerCase(), green: true }]
+        : []),
+    ],
+  };
+}
 
 export default function RootLayout({
   children,
@@ -41,38 +60,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      data-theme="dark"
-      className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} ${ibmPlexSans.variable} h-full antialiased`}
-      suppressHydrationWarning
-    >
+    <html lang="en" className={`${vt323.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: BOOT_INIT_SCRIPT }} />
       </head>
-      <body className="relative flex min-h-full flex-col" suppressHydrationWarning>
+      <body className="flex min-h-full flex-col" suppressHydrationWarning>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:border focus:border-accent focus:bg-background focus:px-3 focus:py-2 focus:text-accent"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[110] focus:bg-win focus:px-3 focus:py-2 focus:text-link"
         >
           Skip to content
         </a>
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-0 bg-[size:36px_36px] [background-image:linear-gradient(var(--grid,transparent)_1px,transparent_1px),linear-gradient(90deg,var(--grid,transparent)_1px,transparent_1px)] [mask-image:radial-gradient(150%_100%_at_25%_-5%,#000,transparent_70%)]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed -left-32 -top-52 z-0 h-[460px] w-[760px] bg-[radial-gradient(50%_50%_at_50%_50%,var(--glow,transparent),transparent_70%)]"
-        />
-        <Nav />
-        <main
-          id="main-content"
-          className="relative z-[1] mx-auto w-full max-w-[1180px] flex-1 px-4 py-10 sm:px-7"
+        <DesktopShell
+          jobs={toDesktopJobs(getExperience())}
+          links={getLinks()}
+          hometown={profile.hometown}
+          boot={bootScreen()}
         >
-          <Breadcrumb />
           {children}
-        </main>
+        </DesktopShell>
         <Analytics />
       </body>
     </html>

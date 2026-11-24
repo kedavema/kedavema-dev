@@ -1,16 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
-  getArchitecture,
+  getCaseStudies,
   getCaseStudyBySlug,
-  getCoreSkills,
   getExperience,
-  getFeaturedProjects,
-  getLanguages,
   getLinks,
   getProfile,
-  getProjectBySlug,
-  getProjects,
-  getSkillGroups,
+  getSideProjects,
 } from "./content";
 
 describe("content repository", () => {
@@ -26,61 +21,41 @@ describe("content repository", () => {
     expect(links.linkedin).toMatch(/^https:\/\//);
   });
 
-  it("returns non-empty skill groups and core skills", () => {
-    expect(getSkillGroups().length).toBeGreaterThan(0);
-    expect(getCoreSkills().length).toBeGreaterThan(0);
+  it("lists the current job first, then by most recent end date", () => {
+    const [current, ...past] = getExperience();
+    expect(current.end).toBeUndefined();
+
+    const ends = past.map((entry) => entry.end!);
+    expect(ends).toEqual([...ends].sort().reverse());
   });
 
-  it("returns languages", () => {
-    expect(getLanguages().length).toBeGreaterThan(0);
+  it("has exactly one current job", () => {
+    expect(getExperience().filter((entry) => !entry.end)).toHaveLength(1);
   });
 
-  it("returns projects sorted by order", () => {
-    const projects = getProjects();
-    const orders = projects.map((p) => p.order);
-    const sorted = [...orders].sort((a, b) => a - b);
-    expect(orders).toEqual(sorted);
+  it("never ends a job before it starts", () => {
+    for (const entry of getExperience()) {
+      if (entry.end) expect(entry.end >= entry.start).toBe(true);
+    }
   });
 
-  it("filters featured projects", () => {
-    const featured = getFeaturedProjects();
-    expect(featured.every((p) => p.featured)).toBe(true);
-    expect(featured.length).toBeGreaterThan(0);
+  it("links only to case studies that exist", () => {
+    const referenced = [...getExperience(), ...getSideProjects()]
+      .map((item) => item.caseStudy)
+      .filter((slug): slug is string => Boolean(slug));
+
+    expect(referenced.length).toBeGreaterThan(0);
+    for (const slug of referenced) {
+      expect(getCaseStudyBySlug(slug), `missing case study "${slug}"`).toBeDefined();
+    }
   });
 
-  it("looks up a project by slug", () => {
-    const [first] = getProjects();
-    expect(getProjectBySlug(first.slug)).toEqual(first);
+  it("uses unique case study slugs", () => {
+    const slugs = getCaseStudies().map((caseStudy) => caseStudy.slug);
+    expect(new Set(slugs).size).toBe(slugs.length);
   });
 
-  it("keeps project lifecycle status in the content source of truth", () => {
-    expect(getProjectBySlug("ai-knowledge-rag")?.status).toBe("in development");
-  });
-
-  it("returns undefined for an unknown project slug", () => {
-    expect(getProjectBySlug("does-not-exist")).toBeUndefined();
-  });
-
-  it("looks up a case study by project slug when one exists", () => {
-    const projectWithCaseStudy = getProjects().find((p) =>
-      getCaseStudyBySlug(p.slug)
-    );
-    expect(projectWithCaseStudy).toBeDefined();
-    const caseStudy = getCaseStudyBySlug(projectWithCaseStudy!.slug);
-    expect(caseStudy?.projectSlug).toBe(projectWithCaseStudy!.slug);
-  });
-
-  it("returns undefined for a project without a case study", () => {
+  it("returns undefined for an unknown case study", () => {
     expect(getCaseStudyBySlug("does-not-exist")).toBeUndefined();
-  });
-
-  it("returns experience entries", () => {
-    expect(getExperience().length).toBeGreaterThan(0);
-  });
-
-  it("returns the architecture narrative", () => {
-    const architecture = getArchitecture();
-    expect(architecture.summary).toBeTruthy();
-    expect(architecture.notes.length).toBeGreaterThan(0);
   });
 });

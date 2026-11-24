@@ -69,10 +69,31 @@ Real content (profile, links, skills, featured projects/case studies, experience
 - Deployed to Vercel production: `kedavemas-projects/mi-pagina`, GitHub repo connected for autodeploy on push to `main`. Live and canonical URL: `https://iamkev.vercel.app`.
 - Verified: `pnpm lint`, `pnpm build`, `pnpm test`, and `pnpm exec playwright test` all clean.
 
+## M7 — kedavema desktop redesign (Nov 2026) 🚧 in review
+
+Goal: stop looking AI-generated. The site is now a text-mode desktop (windows, menus, dialogs) with copy rewritten from the 2026 CV. Inspired by retro TUIs, with its own palette and details from Ypacaraí (guitar wallpaper, Tacuaral telegraph).
+
+- Look: VT323 everywhere, dark green desktop, cream menu and status bars, orange title bar on the active window, solid block shadows. One theme only (no light mode).
+- Desktop (`src/components/desktop/`): `DesktopShell` (state, keyboard shortcuts) wraps every page with `MenuBar` (File/Work/Links/Help dropdowns + live Asunción clock), `StatusBar`, `Wallpaper` (guitar for Ypacaraí), `Dialogs` and `BootScreen`. Windows are `Window` (static) and `DialogWindow` (native `<dialog>`: focus, Esc, inert background).
+- Home: KEVIN.TXT, WORK.DB (rows open each job's window), STACK.CFG, RAG.PRJ, desktop icons. Case studies render as a window at `/work/[slug]`; `/contact` is the telegram window; 404 is "File not found".
+- Telegram (`TelegramForm`): the contact form, posting to `/api/contact` with subject "Telegram from <name>". Shows the message in Morse after sending.
+- Boot screen: once per session, skipped for reduced motion and automated browsers (`navigator.webdriver`); any key skips it.
+- Shortcuts: W work menu, D résumé, T telegram, H help, Alt-X exit, Esc close.
+- Routes: `/`, `/work/[slug]`, `/contact`. Old `/about`, `/projects`, `/projects/[slug]`, `/resume` redirect (`next.config.ts`). Résumé is `public/resume.pdf` (2026 CV).
+- Dropped during review: a LAKE.EXE easter egg playing a guarania. The real "Recuerdo de Ypacaraí" melody is still under copyright, so it was removed rather than shipped with a substitute.
+- Removed: terminal shell and commands, editorial components, theme toggle, architecture/principles/skills content, Next starter SVGs.
+- Tests: unit (content integrity, period, Morse, Asunción clock, 8.3 names, TelegramForm) and e2e (navigation, job windows, redirects, 404, telegram, shortcuts, boot screen, axe on every route and with windows open).
+
+Open items:
+- Photo for KEVIN.TXT (planned: 1-bit dithered at build time).
+- Mango case study: Result section with real numbers; confirm with Mango what can be public.
+- AI Knowledge RAG: add `links.repo` / `links.live` once public.
+- Custom domain instead of `iamkev.vercel.app` (update `src/lib/seo/site.ts` and its test).
+
 ---
 
 ## Deferred / fast-follow items (not blocking any milestone)
 
 - AI Knowledge RAG: real deploy, screenshots, repo link, evaluation metrics.
-- Coderhouse / Monchis: additional safe metrics if they become available (do not invent).
+- Coderhouse / Monchis: additional safe metrics if they become available (do not invent). The old "up to 40%" Monchis figure is no longer claimed.
 - Calendly link, Education/Certifications on-site: explicitly excluded from the portfolio for now.

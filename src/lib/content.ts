@@ -1,11 +1,9 @@
 import { profile } from "@content/profile";
 import { links } from "@content/links";
-import { coreSkills, skillGroups, languages } from "@content/skills";
-import { projects } from "@content/projects";
-import { caseStudies } from "@content/case-studies";
 import { experience } from "@content/experience";
-import { architecture } from "@content/architecture";
-import { principles } from "@content/principles";
+import { stack } from "@content/stack";
+import { sideProjects } from "@content/side-projects";
+import { caseStudies } from "@content/case-studies";
 
 export function getProfile() {
   return profile;
@@ -15,42 +13,29 @@ export function getLinks() {
   return links;
 }
 
-export function getSkillGroups() {
-  return skillGroups;
+const OPEN_END = "9999-12";
+
+/** Current job first, then by most recent end date (start date breaks ties). */
+export function getExperience() {
+  return [...experience].sort(
+    (a, b) =>
+      (b.end ?? OPEN_END).localeCompare(a.end ?? OPEN_END) || b.start.localeCompare(a.start),
+  );
 }
 
-export function getCoreSkills() {
-  return coreSkills;
+export function getStack() {
+  return stack;
 }
 
-export function getLanguages() {
-  return languages;
+export function getSideProjects() {
+  return sideProjects;
 }
 
-export function getProjects() {
-  return [...projects].sort((a, b) => a.order - b.order);
-}
-
-export function getFeaturedProjects() {
-  return getProjects().filter((project) => project.featured);
-}
-
-export function getProjectBySlug(slug: string) {
-  return projects.find((project) => project.slug === slug);
+export function getCaseStudies() {
+  return caseStudies;
 }
 
 export function getCaseStudyBySlug(slug: string) {
-  return caseStudies.find((caseStudy) => caseStudy.projectSlug === slug);
+  return caseStudies.find((caseStudy) => caseStudy.slug === slug);
 }
 
-export function getExperience() {
-  return experience;
-}
-
-export function getArchitecture() {
-  return architecture;
-}
-
-export function getPrinciples() {
-  return principles;
-}
