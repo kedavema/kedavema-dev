@@ -85,10 +85,15 @@ Goal: stop looking AI-generated. The site is now a text-mode desktop (windows, m
 - Tests: unit (content integrity, period, Morse, Asunción clock, 8.3 names, TelegramForm) and e2e (navigation, job windows, redirects, 404, telegram, shortcuts, boot screen, axe on every route and with windows open).
 
 Open items:
-- Photo for KEVIN.TXT (planned: 1-bit dithered at build time).
 - Mango case study: Result section with real numbers; confirm with Mango what can be public.
 - AI Knowledge RAG: add `links.repo` / `links.live` once public.
 - Custom domain instead of `iamkev.vercel.app` (update `src/lib/seo/site.ts` and its test).
+
+## M8 — Portrait and telegram email (Nov 2026) 🚧 in review
+
+- Portrait in KEVIN.TXT: `public/kevin.png`, 160×160, Atkinson-dithered to two colours (#0b0f0e / #e9e4d6), shown with `image-rendering: pixelated`. Made from the original photo with a Playwright/canvas script (crop to the face, contrast 1.7, brightness +0.2); only the dithered file is in the repo. Configured in `content/profile.ts` (`photo`).
+- Telegram email (`src/lib/contact/telegramEmail.ts`): HTML telegram (inline styles, tables) plus plain text, subject "Telegram from <name>: <first 50 chars>", received time in Asunción, sender shown as "kedavema.dev telegraph" when `CONTACT_FROM_EMAIL` is a bare address. Visitor input is HTML-escaped. Reply-to stays the visitor.
+- Still sent from `onboarding@resend.dev`: a custom sender (and an auto-reply to visitors) needs a domain verified in Resend, which `*.vercel.app` can't be.
 
 ---
 
